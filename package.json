@@ -9,6 +9,10 @@
     "build": "tsc ./src/main.ts"
   },
   "devDependencies": {
+    "@types/reflect-metadata": "^0.1.0",
     "typescript": "^3.7.2"
+  },
+  "dependencies": {
+    "reflect-metadata": "^0.1.13"
   }
 }
