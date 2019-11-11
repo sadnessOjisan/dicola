@@ -26,7 +26,7 @@ class Container {
   public resolve(tokens: any) {
     console.log("resolve");
 
-    return new target(...tokens);
+    return new tokens(...tokens);
   }
 
   public register(constructorToken: any, depend: any) {

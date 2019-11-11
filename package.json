@@ -6,7 +6,8 @@
   "author": "sadness_ojisan <sadness.ojisan@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "tsc ./src/main.ts"
+    "build": "tsc ./src/main/main.ts",
+    "build:example": "tsc ./src/example/test1.ts"
   },
   "devDependencies": {
     "@types/reflect-metadata": "^0.1.0",
