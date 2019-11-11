@@ -29,8 +29,7 @@ class Container {
     return new target(...tokens);
   }
 
-  public register(constructorToken: string) {
-    console.log("register");
-    this.data.set(constructorToken, "");
+  public register(constructorToken: any, depend: any) {
+    this.data.set(constructorToken, depend);
   }
 }
