@@ -1,4 +1,6 @@
 import { injectable } from "../main/Injectable";
+import "reflect-metadata";
+import Container from "../main/Container";
 
 class Hoge {
   call() {

@@ -33,3 +33,5 @@ class Container {
     this.data.set(constructorToken, depend);
   }
 }
+
+export default Container;
