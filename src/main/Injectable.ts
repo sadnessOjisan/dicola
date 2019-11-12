@@ -1,4 +1,5 @@
 import { InjectionToken, Dictionary } from "./type";
+import Container from "./Container";
 
 export const INJECTION_TOKEN_METADATA_KEY = "injectionTokens";
 
