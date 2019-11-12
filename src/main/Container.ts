@@ -24,9 +24,14 @@ class Container {
   }
 
   public resolve(tokens: any) {
-    console.log("resolve");
-
+    const instance = this.getInstance(tokens);
+    console.log(instance);
     return new tokens(...tokens);
+  }
+
+  public getInstance(c: any) {
+    const instance = this.data.get(c);
+    return instance;
   }
 
   public register(constructorToken: any, depend: any) {
