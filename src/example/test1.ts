@@ -27,5 +27,5 @@ class Foo {
 }
 
 const container = Container.getInstance();
-container.resolve(Foo);
-console.log(container);
+const foo = container.resolve(Foo);
+console.log(foo);
