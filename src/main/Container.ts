@@ -8,7 +8,7 @@ type constructor<T> = {
 class Container {
   private static instance: Container;
 
-  // keyにconstructor
+  // key is constructor
   data: Map<any, any[]>;
   context: Map<any, any>;
 
@@ -25,7 +25,6 @@ class Container {
   }
 
   public resolve(ctor: constructor<any>) {
-    console.log("this.context", this.context);
     this.resolveInstance(ctor);
     const dependantClasses = this.data.get(ctor);
     if (dependantClasses) {
@@ -51,36 +50,26 @@ class Container {
       });
 
       const arg = this.context.get(ctor);
-      console.log("arg", arg);
       return arg;
     } else {
       this.context.set(ctor, new ctor());
-      console.log("no depend");
     }
   }
 
   private resolveInstance(cls: any) {
     const instanceCache = this.context.get(cls);
     if (instanceCache) {
-      const instance = new cls(instanceCache);
-      console.log("clsssss", cls);
       return this.resolve(cls);
     } else {
       const depends = this.data.get(cls);
-      console.log(0);
-      console.log("depends", depends);
       if (depends) {
+        const dependInstances = depends.map(d => new d());
         this.resolve(depends[0]);
-        // TODO: 複数受け取れるようにしたいよね
-        const instance = new cls(new depends[0]());
+        const instance = new cls(...dependInstances);
         this.context.set(cls, instance);
-        console.log("context", this.context);
-        console.log(1);
       } else {
-        console.log(2);
         const instance = new cls();
         this.context.set(cls, instance);
-        console.log("no depend instance", instance);
       }
     }
   }

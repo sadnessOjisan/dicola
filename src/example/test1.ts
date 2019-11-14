@@ -28,5 +28,4 @@ class Foo {
 
 const container = Container.getInstance();
 const foo = container.resolve(Foo);
-console.log("end foo", foo);
-console.log(new foo.fuga.hoge.call());
+new foo.fuga.hoge.call();
