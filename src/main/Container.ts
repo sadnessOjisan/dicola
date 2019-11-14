@@ -25,12 +25,11 @@ class Container {
   }
 
   public resolve(ctor: constructor<any>) {
+    console.log("this.context", this.context);
     this.resolveInstance(ctor);
     const dependantClasses = this.data.get(ctor);
     if (dependantClasses) {
       let isInstantbale = false;
-      console.log(dependantClasses);
-      console.log("isInstantbale", isInstantbale);
       dependantClasses.forEach(cls => {
         if (this.context.get(cls)) {
           isInstantbale = true;
@@ -52,9 +51,11 @@ class Container {
       });
 
       const arg = this.context.get(ctor);
+      console.log("arg", arg);
       return arg;
     } else {
-      console.log("no");
+      this.context.set(ctor, new ctor());
+      console.log("no depend");
     }
   }
 
@@ -62,18 +63,24 @@ class Container {
     const instanceCache = this.context.get(cls);
     if (instanceCache) {
       const instance = new cls(instanceCache);
+      console.log("clsssss", cls);
       return this.resolve(cls);
     } else {
       const depends = this.data.get(cls);
-      console.log("cls", cls);
-      console.log("のdependは", depends);
+      console.log(0);
+      console.log("depends", depends);
       if (depends) {
-        const instance = new cls(...depends);
-        this.context.set(cls, instance);
         this.resolve(depends[0]);
+        // TODO: 複数受け取れるようにしたいよね
+        const instance = new cls(new depends[0]());
+        this.context.set(cls, instance);
+        console.log("context", this.context);
+        console.log(1);
       } else {
+        console.log(2);
         const instance = new cls();
         this.context.set(cls, instance);
+        console.log("no depend instance", instance);
       }
     }
   }
