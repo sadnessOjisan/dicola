@@ -20,43 +20,60 @@ class Container {
   static getInstance() {
     if (!Container.instance) {
       Container.instance = new Container();
-      // ... any one time initialization goes here ...
     }
     return Container.instance;
   }
 
   public resolve(ctor: constructor<any>) {
-    console.log("ctor", ctor);
+    this.resolveInstance(ctor);
     const dependantClasses = this.data.get(ctor);
-    console.log("dependantClasses", dependantClasses);
     if (dependantClasses) {
+      let isInstantbale = false;
+      console.log(dependantClasses);
+      console.log("isInstantbale", isInstantbale);
       dependantClasses.forEach(cls => {
-        this.resolveConstructor(ctor, cls);
+        if (this.context.get(cls)) {
+          isInstantbale = true;
+        }
       });
+
+      if (isInstantbale) {
+        const instances = dependantClasses.map(cls => this.context.get(cls));
+        return new ctor(...instances);
+      }
+
+      dependantClasses.forEach(cls => {
+        const instance = this.context.get(cls);
+        if (instance) {
+          return new ctor(instance);
+        } else {
+          this.resolveInstance(cls);
+        }
+      });
+
+      const arg = this.context.get(ctor);
+      return arg;
     } else {
       console.log("no");
     }
   }
 
-  public resolveConstructor(ctor: constructor<any>, cls: any) {
-    console.log(ctor);
-    console.log(cls);
-    console.log(this.data);
-    const depend = this.data.get(cls);
-    if (depend) {
-      this.resolve(depend[0]);
+  private resolveInstance(cls: any) {
+    const instanceCache = this.context.get(cls);
+    if (instanceCache) {
+      const instance = new cls(instanceCache);
+      return this.resolve(cls);
     } else {
-      console.log("this.context", this.context);
-      const instanceCache = this.context.get(ctor);
-      if (instanceCache) {
-        const instance = new cls(instanceCache);
-        this.context.set(ctor, instance);
-        return this.resolve(cls);
+      const depends = this.data.get(cls);
+      console.log("cls", cls);
+      console.log("のdependは", depends);
+      if (depends) {
+        const instance = new cls(...depends);
+        this.context.set(cls, instance);
+        this.resolve(depends[0]);
       } else {
         const instance = new cls();
-        this.context.set(ctor, instance);
-
-        return this.resolve(ctor);
+        this.context.set(cls, instance);
       }
     }
   }

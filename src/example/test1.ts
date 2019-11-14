@@ -4,7 +4,7 @@ import Container from "../main/Container";
 
 class Hoge {
   call() {
-    console.log("hoge");
+    console.log("hogeeeeeeeeee");
   }
 }
 
@@ -28,4 +28,4 @@ class Foo {
 
 const container = Container.getInstance();
 const foo = container.resolve(Foo);
-console.log(foo);
+console.log(new foo.fuga.hoge().call());
