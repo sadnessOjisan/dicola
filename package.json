@@ -6,10 +6,15 @@
   "author": "sadness_ojisan <sadness.ojisan@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "start": "node dist/example/test1.js",
+    "dev": "ts-node src/example/test1.js",
+    "dev:watch": "ts-node-dev --respawn src/example/test1.ts"
   },
   "devDependencies": {
     "@types/reflect-metadata": "^0.1.0",
+    "ts-node": "^8.5.0",
+    "ts-node-dev": "^1.0.0-pre.44",
     "typescript": "^3.7.2"
   },
   "dependencies": {
