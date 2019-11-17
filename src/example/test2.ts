@@ -1,3 +1,5 @@
+// can revolve via interface
+
 import Container from "../main/Container";
 import { injectable } from "../main/Injectable";
 import "reflect-metadata"; // 呼び出し側も必要
