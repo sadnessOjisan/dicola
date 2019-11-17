@@ -9,7 +9,7 @@
     "build": "tsc",
     "start": "node dist/example/test1.js",
     "dev": "ts-node src/example/test1.js",
-    "dev:watch": "ts-node-dev --respawn src/example/test3.ts"
+    "dev:watch": "ts-node-dev --respawn src/example/test2.ts"
   },
   "devDependencies": {
     "@types/reflect-metadata": "^0.1.0",

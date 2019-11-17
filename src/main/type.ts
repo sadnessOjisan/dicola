@@ -1,4 +1,4 @@
-type constructor<T> = {
+export type constructor<T> = {
   new (...args: any[]): T;
 };
 
