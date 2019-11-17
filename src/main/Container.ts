@@ -25,6 +25,7 @@ class Container {
   }
 
   public resolve(ctor: constructor<any>) {
+    console.log(this.data);
     this.resolveInstance(ctor);
     const dependantClasses = this.data.get(ctor);
     if (dependantClasses) {
