@@ -1,6 +1,4 @@
-type constructor<T> = {
-  new (...args: any[]): T;
-};
+import { constructor } from "./type";
 
 /**
  * DI Container is a Singleton.
@@ -9,12 +7,12 @@ class Container {
   private static instance: Container;
 
   // key is constructor
-  data: Map<any, any[]>;
-  context: Map<any, any>;
+  data: Map<constructor<any>, constructor<any>[]>;
+  context: Map<constructor<any>, InstanceType<constructor<any>>>;
 
   private constructor() {
-    this.data = new Map<any, any>();
-    this.context = new Map<any, any>();
+    this.data = new Map<constructor<any>, constructor<any>[]>();
+    this.context = new Map<any, InstanceType<constructor<any>>>();
   }
 
   static getInstance() {
@@ -25,7 +23,7 @@ class Container {
   }
 
   public resolve(ctor: constructor<any>) {
-    console.log(this.data);
+    console.log("this.data", this.data);
     this.resolveInstance(ctor);
     const dependantClasses = this.data.get(ctor);
     if (dependantClasses) {

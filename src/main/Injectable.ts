@@ -3,6 +3,9 @@ import Container from "./Container";
 
 export const INJECTION_TOKEN_METADATA_KEY = "injectionTokens";
 
+/**
+ * injectable decorator
+ */
 export const injectable = (): ClassDecorator => {
   return target => {
     const params: any[] =

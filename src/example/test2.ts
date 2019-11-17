@@ -1,16 +1,9 @@
+// can revolve via interface
+
 import Container from "../main/Container";
 import { injectable } from "../main/Injectable";
 import "reflect-metadata"; // 呼び出し側も必要
 import { inject } from "../main/inject";
-// interface test
-
-const container = Container.getInstance();
-const service = container.resolve(Service);
-console.log(service);
-service.save(1);
-service.save(2);
-const data = service.find();
-console.log("the value: ", data);
 
 interface IRepository {
   read: () => number[];
@@ -79,3 +72,13 @@ class Service {
     this.repo.create(val);
   }
 }
+
+// interface test
+
+const container = Container.getInstance();
+const service = container.resolve(Service);
+console.log(service);
+service.save(1);
+service.save(2);
+const data = service.find();
+console.log("the value: ", data);
