@@ -15,6 +15,7 @@ class Container {
     this.context = new Map<any, InstanceType<constructor<any>>>();
   }
 
+  // this container is singleton.
   static getInstance() {
     if (!Container.instance) {
       Container.instance = new Container();
@@ -22,17 +23,13 @@ class Container {
     return Container.instance;
   }
 
+  // resolve dependency
   public resolve(ctor: constructor<any>) {
     const dependantClasses2 = this.data.get(ctor);
-    if (!dependantClasses2) {
-      console.log("SEEEEEEEEEEEEET");
+    if (dependantClasses2 && dependantClasses2.length > 0) {
       const instance = new ctor();
-      console.log("instance", instance);
       this.context.set(ctor, instance);
     }
-    console.log("dataaaaaaaa", this.data);
-    console.log("contexttttttt", this.context);
-    console.log(dependantClasses2);
     this.resolveInstance(ctor);
     const dependantClasses = this.data.get(ctor);
     if (!dependantClasses) return;
@@ -40,18 +37,24 @@ class Container {
     return new ctor(...instances);
   }
 
+  // take a instance
   private resolveInstance(ctor: any) {
     const depends = this.data.get(ctor);
-    if (!depends) return;
-    const dependInstances = depends.map(d => new d());
+    if (!depends) {
+      const i = new ctor();
+      this.context.set(ctor, i);
+      return;
+    }
     this.resolve(depends[0]);
-    console.log("dependInstances2", dependInstances);
-    console.log("ctor", ctor);
+    const dependInstances = depends.map(d => {
+      return this.context.get(d);
+    });
+
     const instance = new ctor(...dependInstances);
-    console.log("instance", instance);
     this.context.set(ctor, instance);
   }
 
+  // register dependency
   public register(constructorToken: any, depend: any) {
     this.data.set(constructorToken, depend);
   }

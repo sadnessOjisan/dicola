@@ -1,54 +1,51 @@
+// so many nest example
+
 import { injectable } from "../main/Injectable";
 import "reflect-metadata";
 import Container from "../main/Container";
 
-class Hoge {
+class A {
   call() {
     console.log("hogeeeeeeeeee");
   }
 }
 
-new Hoge().call();
-
-// simple example
-
 @injectable()
-class Fuga {
-  hoge: Hoge;
+class B {
+  a: A;
 
-  constructor(hoge: Hoge) {
-    this.hoge = hoge;
+  constructor(a: A) {
+    this.a = a;
   }
 }
 
 @injectable()
-class Foo {
-  fuga: Fuga;
+class C {
+  b: B;
 
-  constructor(fuga: Fuga) {
-    this.fuga = fuga;
+  constructor(b: B) {
+    this.b = b;
   }
 }
 
 @injectable()
-class Piyo {
-  foo: Foo;
+class D {
+  c: C;
 
-  constructor(fuga: Foo) {
-    this.foo = fuga;
+  constructor(c: C) {
+    this.c = c;
   }
 }
 
 @injectable()
-class Bar {
-  piyo: Piyo;
+class E {
+  d: D;
 
-  constructor(piyo: Piyo) {
-    this.piyo = piyo;
+  constructor(d: D) {
+    this.d = d;
   }
 }
 
 const container = Container.getInstance();
-const bar = container.resolve(Bar);
-console.log(bar);
-bar.piyo.foo.fuga.hoge.call();
+const e = container.resolve(E);
+e.d.c.b.a.call();
