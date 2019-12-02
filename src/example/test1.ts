@@ -8,6 +8,8 @@ class Hoge {
   }
 }
 
+new Hoge().call();
+
 // simple example
 
 @injectable()
@@ -28,6 +30,25 @@ class Foo {
   }
 }
 
+@injectable()
+class Piyo {
+  foo: Foo;
+
+  constructor(fuga: Foo) {
+    this.foo = fuga;
+  }
+}
+
+@injectable()
+class Bar {
+  piyo: Piyo;
+
+  constructor(piyo: Piyo) {
+    this.piyo = piyo;
+  }
+}
+
 const container = Container.getInstance();
-const foo = container.resolve(Foo);
-foo.fuga.hoge.call();
+const bar = container.resolve(Bar);
+console.log(bar);
+bar.piyo.foo.fuga.hoge.call();
