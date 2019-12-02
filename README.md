@@ -1,6 +1,10 @@
 # dicola
 
-DI COntainer 4 Layered Architecture
+DI COntainer 4 Layered Architecture.
+
+This DI Container is for Clean Archetechture. Only support single depency direction.
+
+Is it a useless? Yes, I think so. But it provides DI Container with so tiny bundle size.
 
 ## install
 
@@ -18,6 +22,14 @@ You should configure tsconfig.json.
     }
 }
 ```
+
+## how to use
+
+please show [examples](https://github.com/sadnessOjisan/dicola/tree/master/src/example).
+
+public API is `@injectable()`, `@inject(${className/Symbol})`, `Container.getInstance().resolve(${Constructor})`.
+
+(dicola provide a singleton container.)
 
 ## For developer
 
